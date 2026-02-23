@@ -107,3 +107,12 @@ class ArtistAlbumsWidget(ListWidgetModelView):
 
     def make_item_widget(self, entry) -> ListWidgetModelViewItem:
         return ArtistAlbumsItemWidget(entry)
+
+    def set_filter(self, text: str):
+        text = text.lower()
+        for i in range(self.count()):
+            item = self.item(i)
+            widget = self.itemWidget(item)
+            if widget and hasattr(widget, 'release_group') and widget.release_group:
+                visible = not text or text in widget.release_group.title.lower()
+                item.setHidden(not visible)

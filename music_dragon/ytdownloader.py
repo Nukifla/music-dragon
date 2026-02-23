@@ -30,6 +30,7 @@ YDL_DEFAULT_OPTS = {
         }
     ],
     'verbose': music_dragon.log.debug_enabled,
+    'extractor_args': {'youtube': {'js_runtimes': ['nodejs']}},
 }
 YDL_DEFAULT_PLAYLIST_OPTS = {
     'format': 'bestaudio/best',
@@ -39,8 +40,8 @@ YDL_DEFAULT_PLAYLIST_OPTS = {
         'preferredquality': '320',
     }],
     'verbose': music_dragon.log.debug_enabled,
-    'ignoreerrors': True
-
+    'ignoreerrors': True,
+    'extractor_args': {'youtube': {'js_runtimes': ['nodejs']}},
 }
 
 downloads = {}
@@ -219,6 +220,7 @@ class TrackDownloaderWorker(Worker):
             'outtmpl': outtmpl,
             'cachedir': False,
             'verbose': music_dragon.log.debug_enabled,
+            'extractor_args': {'youtube': {'js_runtimes': ['nodejs']}},
         }
 
         if is_signed_in():

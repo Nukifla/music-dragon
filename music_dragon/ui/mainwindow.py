@@ -138,6 +138,7 @@ class MainWindow(QMainWindow):
         self.artist_albums_model = ArtistAlbumsModel()
         self.ui.artistAlbums.set_model(self.artist_albums_model)
         self.ui.artistAlbums.row_clicked.connect(self.on_artist_album_clicked)
+        self.ui.artistAlbumsFilter.textChanged.connect(lambda text: self.ui.artistAlbums.set_filter(text))
         self.ui.artistCover.double_clicked.connect(self.on_artist_image_double_clicked)
         self.ui.artistCover.set_clickable(False)
         self.ui.artistCover.set_double_clickable(True)
@@ -572,6 +573,7 @@ class MainWindow(QMainWindow):
         self.artist_cover_data = cover
 
         # albums
+        self.ui.artistAlbumsFilter.clear()
         self.artist_albums_model.artist_id = artist.id
         self.ui.artistAlbums.invalidate()
 
@@ -723,7 +725,7 @@ class MainWindow(QMainWindow):
     def on_search_release_groups_result(self, query, release_groups: List[ReleaseGroup]):
         debug(f"on_search_release_groups_result(query={query}")
 
-        if query != self.last_search_query:
+        if query.lower() != self.last_search_query.lower():
             print(
                 f"WARN: ignoring results for query: {query} since differs from current query: {self.last_search_query}")
             return
@@ -737,7 +739,7 @@ class MainWindow(QMainWindow):
     def on_search_artists_result(self, query, artists: List[Artist]):
         debug(f"on_search_artists_result(query={query}")
 
-        if query != self.last_search_query:
+        if query.lower() != self.last_search_query.lower():
             print(f"WARN: ignoring results for query: {query} since differs from current query: {self.last_search_query}")
             return
 
@@ -779,7 +781,7 @@ class MainWindow(QMainWindow):
     def on_search_tracks_result(self, query, tracks: List[Track]):
         debug(f"on_search_tracks_result(query={query})")
 
-        if query != self.last_search_query:
+        if query.lower() != self.last_search_query.lower():
             print(
                 f"WARN: ignoring results for query: {query} since differs from current query: {self.last_search_query}")
             return
