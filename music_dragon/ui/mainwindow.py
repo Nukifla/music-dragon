@@ -4,7 +4,7 @@ from typing import List, Union, Optional
 
 from PyQt5.QtCore import QTimer, QSortFilterProxyModel, QRegularExpression
 from PyQt5.QtGui import QFont, QMouseEvent, QCloseEvent
-from PyQt5.QtWidgets import QMainWindow, QLabel, QMessageBox
+from PyQt5.QtWidgets import QMainWindow, QLabel, QMessageBox, QComboBox, QHBoxLayout
 
 from music_dragon import localsongs, repository, workers, ytcommons, ytdownloader, preferences, audioplayer, cache, favourites, \
     UNKNOWN_ARTIST, UNKNOWN_ALBUM
@@ -139,6 +139,17 @@ class MainWindow(QMainWindow):
         self.ui.artistAlbums.set_model(self.artist_albums_model)
         self.ui.artistAlbums.row_clicked.connect(self.on_artist_album_clicked)
         self.ui.artistAlbumsFilter.textChanged.connect(lambda text: self.ui.artistAlbums.set_filter(text))
+
+        # Sort controls for artist albums
+        artist_albums_sort_layout = QHBoxLayout()
+        artist_albums_sort_label = QLabel("Sort by:")
+        self.artist_albums_sort_combo = QComboBox()
+        self.artist_albums_sort_combo.addItems(["Date", "Duration"])
+        artist_albums_sort_layout.addWidget(artist_albums_sort_label)
+        artist_albums_sort_layout.addWidget(self.artist_albums_sort_combo)
+        artist_albums_sort_layout.addStretch()
+        self.ui.verticalLayout_8.insertLayout(2, artist_albums_sort_layout)
+        self.artist_albums_sort_combo.currentIndexChanged.connect(self.on_artist_albums_sort_changed)
         self.ui.artistCover.double_clicked.connect(self.on_artist_image_double_clicked)
         self.ui.artistCover.set_clickable(False)
         self.ui.artistCover.set_double_clickable(True)
@@ -173,6 +184,12 @@ class MainWindow(QMainWindow):
         self.ui.localArtistAlbums.set_model(self.local_artist_albums_model)
         self.ui.localArtistAlbums.row_clicked.connect(self.on_local_artist_album_clicked)
         self.ui.localArtistAlbums.favourite_button_clicked.connect(self.on_local_artist_favourite_album_button_clicked)
+
+        # Sort controls for local artist albums
+        self.local_artist_albums_sort_combo = QComboBox()
+        self.local_artist_albums_sort_combo.addItems(["Date", "Duration"])
+        self.ui.horizontalLayout_23.insertWidget(1, self.local_artist_albums_sort_combo)
+        self.local_artist_albums_sort_combo.currentIndexChanged.connect(self.on_local_artist_albums_sort_changed)
 
         self.ui.localArtistCover.double_clicked.connect(self.on_local_artist_image_double_clicked)
 
@@ -252,6 +269,17 @@ class MainWindow(QMainWindow):
         self.ui.localAlbums.setModel(self.local_albums_proxy_model)
         self.ui.localAlbums.setItemDelegate(self.local_albums_delegate)
         self.ui.localAlbumsFilter.textChanged.connect(self.on_local_albums_filter_changed)
+
+        # Sort controls for local albums
+        local_albums_sort_layout = QHBoxLayout()
+        local_albums_sort_label = QLabel("Sort by:")
+        self.local_albums_sort_combo = QComboBox()
+        self.local_albums_sort_combo.addItems(["Name", "Date", "Duration"])
+        local_albums_sort_layout.addWidget(local_albums_sort_label)
+        local_albums_sort_layout.addWidget(self.local_albums_sort_combo)
+        local_albums_sort_layout.addStretch()
+        self.ui.verticalLayout_15.insertLayout(1, local_albums_sort_layout)
+        self.local_albums_sort_combo.currentIndexChanged.connect(self.on_local_albums_sort_changed)
 
         self.ui.localSongsButton.clicked.connect(self.on_local_songs_button_clicked)
         self.ui.localArtistsButton.clicked.connect(self.on_local_artists_button_clicked)
@@ -1865,6 +1893,23 @@ class MainWindow(QMainWindow):
         favourites.set_favourite(artist=artist, album=album, song=None, favourite=next_is_favourite)
 
         self.ui.localArtistAlbums.update_row(self.local_artist_albums_model.entry(row))
+
+    def on_local_albums_sort_changed(self, index: int):
+        modes = ['name', 'date', 'duration']
+        self.local_albums_model.set_sort_mode(modes[index])
+        self.local_albums_model.beginResetModel()
+        self.local_albums_model.reload()
+        self.local_albums_model.endResetModel()
+
+    def on_local_artist_albums_sort_changed(self, index: int):
+        modes = ['date', 'duration']
+        self.local_artist_albums_model.set_sort_mode(modes[index])
+        self.ui.localArtistAlbums.invalidate()
+
+    def on_artist_albums_sort_changed(self, index: int):
+        modes = ['date', 'duration']
+        self.artist_albums_model.set_sort_mode(modes[index])
+        self.ui.artistAlbums.invalidate()
 
 
 
