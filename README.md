@@ -28,7 +28,7 @@ Supports Linux and Windows (experimental).
 #### Linux
 
 ```
-pip install music-dragon
+pip install git+https://github.com/Nukifla/music-dragon
 ```
 
 #### Windows
@@ -36,7 +36,7 @@ pip install music-dragon
 Using pip:
 
 ```
-pip install music-dragon
+pip install git+https://github.com/Nukifla/music-dragon
 ```
 
 Otherwise:
