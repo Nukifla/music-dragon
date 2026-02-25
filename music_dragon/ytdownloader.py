@@ -32,6 +32,7 @@ YDL_DEFAULT_OPTS = {
         }
     ],
     'verbose': music_dragon.log.debug_enabled,
+    'remote_components': ['ejs:github'],
 }
 YDL_DEFAULT_PLAYLIST_OPTS = {
     'format': 'bestaudio*/best',
@@ -42,6 +43,7 @@ YDL_DEFAULT_PLAYLIST_OPTS = {
     }],
     'verbose': music_dragon.log.debug_enabled,
     'ignoreerrors': True,
+    'remote_components': ['ejs:github'],
 }
 
 downloads = {}
@@ -268,6 +270,7 @@ class TrackDownloaderWorker(Worker):
             'outtmpl': outtmpl,
             'cachedir': False,
             'verbose': music_dragon.log.debug_enabled,
+            'remote_components': ['ejs:github'],
         }
 
         apply_auth(ydl_opts)
