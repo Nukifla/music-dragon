@@ -27,11 +27,22 @@ Supports Linux and Windows (experimental).
 
 #### Linux
 
+Install system dependencies:
+```
+sudo apt install ffmpeg nodejs vlc
+```
+
+Then install the package:
 ```
 pip install git+https://github.com/Nukifla/music-dragon
 ```
 
 #### Windows
+
+Install system dependencies:
+* [ffmpeg](https://ffmpeg.org/download.html)
+* [Node.js](https://nodejs.org)
+* [VLC](https://www.videolan.org/vlc/)
 
 Using pip:
 
