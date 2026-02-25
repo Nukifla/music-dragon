@@ -268,7 +268,6 @@ class TrackDownloaderWorker(Worker):
             'outtmpl': outtmpl,
             'cachedir': False,
             'verbose': music_dragon.log.debug_enabled,
-            'js_runtimes': {'node': {}},
         }
 
         apply_auth(ydl_opts)
