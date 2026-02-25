@@ -29,7 +29,8 @@ Supports Linux and Windows (experimental).
 
 Install system dependencies:
 ```
-sudo apt install ffmpeg nodejs vlc
+sudo apt install ffmpeg vlc
+curl -fsSL https://deno.land/install.sh | sh
 ```
 
 Then install the package:
@@ -41,7 +42,7 @@ pip install git+https://github.com/Nukifla/music-dragon
 
 Install system dependencies:
 * [ffmpeg](https://ffmpeg.org/download.html)
-* [Node.js](https://nodejs.org)
+* [Deno](https://deno.com)
 * [VLC](https://www.videolan.org/vlc/)
 
 Using pip:

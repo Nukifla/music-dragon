@@ -32,7 +32,6 @@ YDL_DEFAULT_OPTS = {
         }
     ],
     'verbose': music_dragon.log.debug_enabled,
-    'js_runtimes': {'node': {}},
 }
 YDL_DEFAULT_PLAYLIST_OPTS = {
     'format': 'bestaudio*/best',
@@ -43,7 +42,6 @@ YDL_DEFAULT_PLAYLIST_OPTS = {
     }],
     'verbose': music_dragon.log.debug_enabled,
     'ignoreerrors': True,
-    'js_runtimes': {'node': {}},
 }
 
 downloads = {}
